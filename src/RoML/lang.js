@@ -5,6 +5,8 @@
       syntax: 'roml',
       sendToRobloxStudio: true,
       originalSourceValueName: 'RoML',
+      unallowedRobloxClasses: [ 'Script', 'LocalScript' ],
+      defaultSource: '%Part{Name: "Hello world!"}',
       initializationShortcuts: [
         {
           type: 'extension',
