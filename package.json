@@ -1,0 +1,13 @@
+{
+  "name": "rbx-sync-roml",
+  "version": "0.1.0",
+  "author": "TBSHRichard",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TBSHRichard/RbsSyncRoml.git"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "node-lua": "^1.0.4"
+  }
+}
