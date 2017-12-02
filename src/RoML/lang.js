@@ -1,4 +1,13 @@
 (function() {
+  const nodelua = require('node-lua');
+
+  const NUMBER_OF_PARSE_ARGS = 1;
+  const NUMBER_OF_PARSE_RETURN_VALUES = 1;
+  const NUMBER_OF_COMPILE_ARGS = 2;
+  const NUMBER_OF_COMPILE_RETURN_VALUES = 1;
+
+  var extractRomlName;
+
   module.exports = {
     info: {
       extension: '.roml',
@@ -23,7 +32,53 @@
       ]
     },
     transpile: function(file, fileSource, addCommand, guid) {
-      console.log('Transpiling RoML!');
+      setImmediate(function() {
+        try {
+          var lua = new nodelua.LuaState();
+
+          var cpath = __dirname.replace(/\\/g, '/');
+          lua.DoString(`package.cpath = package.cpath .. ';${cpath}/lpeg/?.dll'`);
+          lua.DoString(`package.path = package.path .. ';${cpath}/ROBLOX-Markup-Language/lib/?.lua'`);
+
+          lua.DoFile(__dirname + '/ROBLOX-Markup-Language/lib/com/blacksheepherd/roml/RomlParser.lua');
+          var parser = lua.GetTop();
+
+          lua.DoFile(__dirname + '/ROBLOX-Markup-Language/lib/com/blacksheepherd/roml/RomlCompiler.lua');
+          var compiler = lua.GetTop();
+
+          lua.GetField(compiler, 'Compile');
+          lua.Push(extractRomlName(file));
+
+          lua.GetField(parser, 'Parse');
+          lua.Push(fileSource);
+
+          lua.Call(NUMBER_OF_PARSE_ARGS, NUMBER_OF_PARSE_RETURN_VALUES);
+          lua.Call(NUMBER_OF_COMPILE_ARGS, NUMBER_OF_COMPILE_RETURN_VALUES);
+
+          var luaOut = lua.ToValue(lua.GetTop());
+          lua.Pop();
+
+          lua.Close();
+
+          addCommand('update', {
+            guid: guid,
+            source: luaOut,
+            originalSource: fileSource
+          });
+        }
+        catch (err) {
+          addCommand('output', {
+            text: err
+          });
+        }
+      });
     }
   };
+
+  extractRomlName = function(file) {
+    var lastSlashIndex = file.lastIndexOf('\\') > -1 ? file.lastIndexOf('\\') : file.lastIndexOf('/');
+    var filename = file.substring(lastSlashIndex + 1);
+    var extensionIndex = filename.indexOf('.module.roml');
+    return filename.substring(0, extensionIndex);
+  }
 }).call();

@@ -7,6 +7,10 @@
     "url": "https://github.com/TBSHRichard/RbsSyncRoml.git"
   },
   "license": "MIT",
+  "main": "lang.js",
+  "devDependencies": {
+    "electron-rebuild": "^1.6.0"
+  },
   "dependencies": {
     "node-lua": "^1.0.4"
   }
