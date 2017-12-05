@@ -46,6 +46,9 @@ code.
 Follow the installation instructions for [node-gyp](https://github.com/nodejs/node-gyp) (you can skip installing the
 node package `npm install -g node-gyp`, just follow the setup for your OS).
 
+Also, make sure you add Python to your path. If on windows and using the node global install option, you can run
+`npm --add-python-to-path install -g windows-build-tools`.
+
 ### 2. Install Node Packages
 
 From the main directory for this project, run `npm install`. If there are failures, go back and make sure you have Node
@@ -69,7 +72,7 @@ your OS:
 
 #### 3a. Windows
 
-The easiest way to build the code one Windows is with [Visual Studio](https://www.visualstudio.com/), so download and
+The easiest way to build the code on Windows is with [Visual Studio](https://www.visualstudio.com/), so download and
 install it (Community version will work just fine), making sure to install the C++ tools.
 
 Create a new Win32 Project with an output type of DLL. Copy all of the LPEG header (`.h`) and C (`.c`) files to the new
@@ -103,7 +106,7 @@ Finally, right click the project and go to Properties. In the Properties window:
 That's all the setup, just run Build > Build Solution and the location it builds the DLL to will be displayed in the
 Output window. Make note of that for later!
 
-#### 3b. Mac OSX
+#### 3b. Mac OS
 
 **(I think this should work, but I don't have a Mac to test it out.)**
 
@@ -120,12 +123,14 @@ Now to copy the files to your Custom Languages Folder! Copy the `RoML` directory
 Custom Languages Folder (the path is defined by you inside of the RbxSync settings). Then, copy the following files to
 your `RoML` directory:
 
- * `src/roml.lua` from this repository.
+ * `src/romllib.lua` from this repository.
  * The [ROBLOX-Markup-Language repository](https://github.com/TBSHRichard/ROBLOX-Markup-Language) (you only need the
    `lib` folder if you want to reduce the amount of files).
  * The `node_modules` directory from this repository (you only need the `node-lua` directory, and in this you only
    need `index.js`, `build/Release/lua51.dll` (Windows), & `build/Release/nodelua.node`).
  * Create a new directory named `lpeg` and copy your `lpeg.dll`/`lpeg.so` library inside of it.
+
+RoSS is setup exactly the same way, just using its `lang.js` instead!
 
 Here is the minimal directory structure required:
 
@@ -133,24 +138,42 @@ Here is the minimal directory structure required:
 <RbxSync Custom Languages Folder>
 |
 +-- RoML
+|   |
+|   +-- lpeg
+|   |   |
+|   |   +-- lpeg.dll / lpeg.so
+|   |
+|   +-- node_modules
+|   |   |
+|   |   +-- node-lua
+|   |       |
+|   |       +-- ...
+|   |
+|   +-- ROBLOX-Markup-Language
+|   |   |
+|   |   +-- lib
+|   |       |
+|   |       +-- ...
+|   |
+|   +-- lang.js
+|   |
+|   +-- romllib.lua
+|
++-- RoSS
     |
     +-- lpeg
     |   |
-    |   +-- lpeg.dll / lpeg.so
+    |   +-- ...
     |
     +-- node_modules
     |   |
-    |   +-- node-lua
-    |       |
-    |       +-- ...
+    |   +-- ...
     |
     +-- ROBLOX-Markup-Language
     |   |
-    |   +-- lib
-    |       |
-    |       +-- ...
+    |   +-- ...
     |
     +-- lang.js
     |
-    +-- roml.lua
+    +-- romllib.lua
 ```
