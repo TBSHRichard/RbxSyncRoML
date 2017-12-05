@@ -31,8 +31,8 @@
         ],
         luaIncludes: [
           {
-            file: 'roml.lua',
-            name: 'roml',
+            file: 'romllib.lua',
+            name: 'romllib',
             version: '0.1.0',
             destination: 'ReplicatedStorage.com.blacksheepherd'
           }
