@@ -124,8 +124,7 @@ Custom Languages Folder (the path is defined by you inside of the RbxSync settin
 your `RoML` directory:
 
  * `src/romllib.lua` from this repository.
- * The [ROBLOX-Markup-Language repository](https://github.com/TBSHRichard/ROBLOX-Markup-Language) (you only need the
-   `lib` folder if you want to reduce the amount of files).
+ * The ROBLOX-Markup-Language folder from the lib folder in this repository (you only need build/romlc.lua).
  * The `node_modules` directory from this repository (you only need the `node-lua` directory, and in this you only
    need `index.js`, `build/Release/lua51.dll` (Windows), & `build/Release/nodelua.node`).
  * Create a new directory named `lpeg` and copy your `lpeg.dll`/`lpeg.so` library inside of it.
@@ -151,9 +150,9 @@ Here is the minimal directory structure required:
 |   |
 |   +-- ROBLOX-Markup-Language
 |   |   |
-|   |   +-- lib
+|   |   +-- build
 |   |       |
-|   |       +-- ...
+|   |       +-- romlc.lua
 |   |
 |   +-- lang.js
 |   |

@@ -1,10 +1,8 @@
 (function() {
   const nodelua = require('node-lua');
 
-  const NUMBER_OF_PARSE_ARGS = 1;
-  const NUMBER_OF_PARSE_RETURN_VALUES = 1;
-  const NUMBER_OF_COMPILE_ARGS = 2;
-  const NUMBER_OF_COMPILE_RETURN_VALUES = 1;
+  const NUMBER_OF_TRANSPILE_ARGS = 2;
+  const NUMBER_OF_TRANSPILE_RETURN_VALUES = 1;
 
   module.exports = class {
     constructor() {
@@ -13,6 +11,7 @@
       this.defaultSource = '';
       this.parserName = '';
       this.compilerName = '';
+      this.transpilerName = '';
     }
 
     createInfo() {
@@ -44,24 +43,17 @@
       try {
         var lua = new nodelua.LuaState();
 
-        var cd = __dirname.replace(/\\/g, '/');
-        lua.DoString(`package.cpath = package.cpath .. ';${cd}/lpeg/?.dll'`);
-        lua.DoString(`package.path = package.path .. ';${cd}/ROBLOX-Markup-Language/lib/?.lua'`);
+        var cwd = __dirname.replace(/\\/g, '/');
+        lua.DoString(`package.cpath = package.cpath .. ';${cwd}/lpeg/?.dll'`);
 
-        lua.DoFile(`${cd}/ROBLOX-Markup-Language/lib/com/blacksheepherd/${this.syntax}/${this.parserName}.lua`);
-        var parser = lua.GetTop();
+        lua.DoFile(`${cwd}/ROBLOX-Markup-Language/build/${this.transpilerName}.lua`);
+        var transpiler = lua.GetTop();
 
-        lua.DoFile(`${cd}/ROBLOX-Markup-Language/lib/com/blacksheepherd/${this.syntax}/${this.compilerName}.lua`);
-        var compiler = lua.GetTop();
-
-        lua.GetField(compiler, 'Compile');
+        lua.GetField(transpiler, 'Transpile');
         lua.Push(this.extractModuleName(file));
-
-        lua.GetField(parser, 'Parse');
         lua.Push(fileSource);
 
-        lua.Call(NUMBER_OF_PARSE_ARGS, NUMBER_OF_PARSE_RETURN_VALUES);
-        lua.Call(NUMBER_OF_COMPILE_ARGS, NUMBER_OF_COMPILE_RETURN_VALUES);
+        lua.Call(NUMBER_OF_TRANSPILE_ARGS, NUMBER_OF_TRANSPILE_RETURN_VALUES);
 
         var luaOut = lua.ToValue(lua.GetTop());
         lua.Pop();

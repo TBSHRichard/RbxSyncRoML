@@ -5,8 +5,7 @@
   roml.syntax = 'roml';
   roml.name = 'RoML';
   roml.defaultSource = '%Part{Name: "Hello, RoML!"}';
-  roml.parserName = 'RomlParser';
-  roml.compilerName = 'RomlCompiler';
+  roml.transpilerName = 'romlc';
 
   module.exports = {
     info: roml.createInfo(),
