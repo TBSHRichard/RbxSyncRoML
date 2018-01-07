@@ -9,8 +9,6 @@
       this.syntax = '';
       this.name = '';
       this.defaultSource = '';
-      this.parserName = '';
-      this.compilerName = '';
       this.transpilerName = '';
     }
 

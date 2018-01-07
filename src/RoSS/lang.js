@@ -5,8 +5,7 @@
   ross.syntax = 'ross';
   ross.name = 'RoSS';
   ross.defaultSource = 'Part\n  Name: "Hello, RoSS!"';
-  ross.parserName = 'RossParser';
-  ross.compilerName = 'RossCompiler';
+  ross.transpilerName = 'rossc';
 
   module.exports = {
     info: ross.createInfo(),

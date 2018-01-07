@@ -123,13 +123,13 @@ Now to copy the files to your Custom Languages Folder! Copy the `RoML` directory
 Custom Languages Folder (the path is defined by you inside of the RbxSync settings). Then, copy the following files to
 your `RoML` directory:
 
- * `src/romllib.lua` from this repository.
- * The ROBLOX-Markup-Language folder from the lib folder in this repository (you only need build/romlc.lua).
+ * `src/romllib.lua` and `src/Language.js` from this repository.
+ * The ROBLOX-Markup-Language folder from the lib folder in this repository (you only need `build/romlc.lua`).
  * The `node_modules` directory from this repository (you only need the `node-lua` directory, and in this you only
    need `index.js`, `build/Release/lua51.dll` (Windows), & `build/Release/nodelua.node`).
  * Create a new directory named `lpeg` and copy your `lpeg.dll`/`lpeg.so` library inside of it.
 
-RoSS is setup exactly the same way, just using its `lang.js` instead!
+RoSS is setup exactly the same way, just using its `lang.js` and `build/rossc.lua` instead!
 
 Here is the minimal directory structure required:
 
@@ -154,7 +154,9 @@ Here is the minimal directory structure required:
 |   |       |
 |   |       +-- romlc.lua
 |   |
-|   +-- lang.js
+|   +-- lang.js (src/RoML/lang.js)
+|   |
+|   +-- Language.js
 |   |
 |   +-- romllib.lua
 |
@@ -170,9 +172,13 @@ Here is the minimal directory structure required:
     |
     +-- ROBLOX-Markup-Language
     |   |
-    |   +-- ...
+    |   +-- build
+    |       |
+    |       +-- rossc.lua
     |
-    +-- lang.js
+    +-- lang.js (src/RoSS/lang.js)
+    |
+    +-- Language.js
     |
     +-- romllib.lua
 ```
